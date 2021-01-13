@@ -1,13 +1,12 @@
 const express = require('express')
 const config = require('./config/app')
-
+const router = require('./router')
+const bodyParser = require('body-parser')
 const app = express()
 
-const port = 3000
-
-app.get('/', (req, res) => {
-  return res.json('Home screen1')
-})
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(router)
 
 const port = config.appPort
 
