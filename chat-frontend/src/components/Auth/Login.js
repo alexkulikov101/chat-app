@@ -1,24 +1,19 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { useDispatch } from 'react-redux'
 
-import loginImage from '../../assets/images/login.svg'
 import './Auth.scss'
+import loginImage from '../../assets/images/login.svg'
+import { login } from '../../store/actions/auth'
 
-const Login = () => {
+const Login = ({ history }) => {
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('john.doe@gmail.com')
   const [password, setPassword] = useState('secret')
 
   const submitForm = (e) => {
     e.preventDefault()
-    axios
-      .post('http://127.0.0.1:3000/login', { email, password })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch(login({ email, password }, history))
   }
   return (
     <div id='auth-container'>

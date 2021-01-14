@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-import registerImage from '../../assets/images/register.svg'
 import './Auth.scss'
+import registerImage from '../../assets/images/register.svg'
+import { register } from '../../store/actions/auth'
 
-const Register = () => {
-  const submitForm = () => {}
+const Register = ({ history }) => {
+  const dispatch = useDispatch()
+
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [gender, setGender] = useState('male')
+  const [password, setPassword] = useState('')
+
+  const submitForm = (e) => {
+    e.preventDefault()
+    dispatch(
+      register({ firstName, lastName, email, gender, password }, history)
+    )
+  }
   return (
     <div id='auth-container'>
       <div id='auth-card'>
@@ -20,8 +35,8 @@ const Register = () => {
             <form onSubmit={submitForm}>
               <div className='input-field mb-1'>
                 <input
-                  //onChange={(e) => setFirstName(e.target.value)}
-                  //value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
                   required='required'
                   type='text'
                   placeholder='First name'
@@ -30,8 +45,8 @@ const Register = () => {
 
               <div className='input-field mb-1'>
                 <input
-                  // onChange={(e) => setLastName(e.target.value)}
-                  //value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
                   required='required'
                   type='text'
                   placeholder='Last name'
@@ -40,8 +55,8 @@ const Register = () => {
 
               <div className='input-field mb-1'>
                 <input
-                  // onChange={(e) => setEmail(e.target.value)}
-                  //value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   required='required'
                   type='text'
                   placeholder='Email'
@@ -50,8 +65,8 @@ const Register = () => {
 
               <div className='input-field mb-1'>
                 <select
-                  //onChange={(e) => setGender(e.target.value)}
-                  // value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  value={gender}
                   required='required'
                 >
                   <option value='male'>Male</option>
@@ -61,8 +76,8 @@ const Register = () => {
 
               <div className='input-field mb-2'>
                 <input
-                  // onChange={(e) => setPassword(e.target.value)}
-                  // value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   required='required'
                   type='password'
                   placeholder='Password'
