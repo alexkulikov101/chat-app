@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body
 
   try {
-    const secret = require('crypto').randomBytes(64).toString('hex')
+    // const secret = require('crypto').randomBytes(64).toString('hex')
     const user = await User.findOne({ where: { email } })
 
     if (!user) return res.status(404).json({ message: 'User not found' })
@@ -15,6 +15,8 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Incorrect password' })
 
     const userWithToken = generateToken(user.get({ raw: true }))
+    userWithToken.user.avatar = user.avatar
+
     return res.send(userWithToken)
   } catch (error) {
     return res.status(500).json({ message: error.message })
@@ -26,6 +28,7 @@ exports.register = async (req, res) => {
     const user = await User.create(req.body)
 
     const userWithToken = generateToken(user.get({ raw: true }))
+
     return res.send(userWithToken)
   } catch (error) {
     return res.status(500).json({ message: error.message })
@@ -37,5 +40,5 @@ const generateToken = (user) => {
 
   const token = jwt.sign(user, config.appKey, { expiresIn: 86400 })
 
-  return { ...user, ...{ token } }
+  return { ...{ user }, ...{ token } }
 }
