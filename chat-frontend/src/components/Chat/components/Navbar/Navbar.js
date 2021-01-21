@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { logout } from '../../../../store/actions/auth'
 import Modal from '../../../Modal/Modal'
 import { updateProfile } from '../../../../store/actions/auth'
-
 import './Navbar.scss'
 
 const Navbar = () => {
