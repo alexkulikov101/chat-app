@@ -6,8 +6,8 @@ const ChatService = {
       .then(({ data }) => {
         return data
       })
-      .catch((err) => {
-        throw err
+      .catch((error) => {
+        console.log('ChatService, fetchChats()', error)
       })
   },
 }
